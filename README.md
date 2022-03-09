@@ -1,4 +1,6 @@
-# note_taker
+# Note Taker
+
+![image](https://user-images.githubusercontent.com/94478511/157483870-04642f26-1841-49d1-9f27-2324a40e33f8.png)
 
 ## Deployed link:
 
