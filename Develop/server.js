@@ -28,7 +28,7 @@ app.get("/api/notes", (req, res) => {
 });
 
 app.post("/api/notes", (req, res) => {
-  console.info(`${req.method} request received to add a review`);
+  console.info(`${req.method} request received to add a note`);
 
   const { title, text } = req.body;
   if (title && text) {
@@ -65,6 +65,44 @@ app.post("/api/notes", (req, res) => {
   } else {
     res.status(500).json("Error in posting notes");
   }
+});
+
+app.delete("/api/notes/:id", (req, res) => {
+  console.info(`${req.method} request received to delete a note`);
+  const noteId = req.params.id;
+
+  fs.readFile("./db/db.json", "utf-8", (err, data) => {
+    if (err) {
+      console.error(err);
+    } else {
+      const parsedNotes = JSON.parse(data);
+      const n = parsedNotes.length;
+      for (let i = 0; i < n; i++) {
+        if (n === parsedNotes.length) {
+          console.log(i);
+          var currentNote = parsedNotes[i];
+          if (currentNote.note_id === noteId) {
+            console.log(parsedNotes);
+            parsedNotes.splice(i, 1);
+
+            fs.writeFile(
+              "./db/db.json",
+              JSON.stringify(parsedNotes, null, 4),
+              (writeErr) =>
+                writeErr
+                  ? console.error(writeErr)
+                  : console.info("successfully updated notes!")
+            );
+
+            res.status(200).json("success");
+            return;
+          }
+        } else {
+          break;
+        }
+      }
+    }
+  });
 });
 app.listen(PORT, () =>
   console.log(`App listening at http://localhost:${PORT} 🚀`)
