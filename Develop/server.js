@@ -79,10 +79,8 @@ app.delete("/api/notes/:id", (req, res) => {
       const n = parsedNotes.length;
       for (let i = 0; i < n; i++) {
         if (n === parsedNotes.length) {
-          console.log(i);
           var currentNote = parsedNotes[i];
           if (currentNote.note_id === noteId) {
-            console.log(parsedNotes);
             parsedNotes.splice(i, 1);
 
             fs.writeFile(
